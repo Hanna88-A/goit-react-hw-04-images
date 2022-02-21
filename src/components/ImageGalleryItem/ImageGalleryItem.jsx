@@ -1,8 +1,10 @@
 import s from './ImageGalleryItem.module.css'
 const ImageGaleryItem = () => {
+    
     return (
-        <li className={s.galleryItem}>
-            <img className={s.imageGalleryItem} src="" alt="" />
+        
+        <li key='' className={s.galleryItem}>
+            <img className={s.imageGalleryItem} src='' alt='' />
         </li>
     )
 }

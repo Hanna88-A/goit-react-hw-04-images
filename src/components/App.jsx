@@ -7,8 +7,9 @@ import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 import Modal from './Modal/Modal';
 
 export class App extends Component {
-   state = {
-    showModal: false
+  state = {
+    showModal: false,
+    image: []
   };
   togleModal = () => {
     this.setState(({ showModal }) => ({
@@ -16,18 +17,31 @@ export class App extends Component {
     }));
     
   };
+
+ 
+  
+
+  componentDidMount() {
+   
+
+    fetch('https://pixabay.com/api/?q=cat&page=1&key=24819311-d2b7ac0921a0ad572da5f837a&image_type=photo&orientation=horizontal&per_page=12')
+      .then(res => res.json())
+      .then(image => this.setState({ image }));
+  };
+
   render() {
-    const {showModal} = this.state
-      return (
+    console.log(this.state.image.hits)
+    const { showModal, image } = this.state
+    return (
       <div>
-        <Searchbar/>
+        <Searchbar />
         <ImageGallery>
-          <ImageGalleryItem/>
+          {image && (<ImageGalleryItem img={image.hits}/>)}
         </ImageGallery>
         
         {/* <Loader/>
         <Button/> */}
-         {showModal && <Modal><img src="" alt="" /></Modal>}
+        {showModal && <Modal><img src="" alt="" /></Modal>}
         
       </div>
     )
