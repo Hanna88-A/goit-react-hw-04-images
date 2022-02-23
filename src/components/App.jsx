@@ -11,15 +11,16 @@ export class App extends Component {
     showModal: false,
     image: []
   };
+
+
+
   togleModal = () => {
     this.setState(({ showModal }) => ({
       showModal: !showModal
     }));
     
   };
-
  
-  
 
   componentDidMount() {
    
