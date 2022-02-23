@@ -11,7 +11,14 @@ class Searchbar extends Component {
     };
     handleSubmit = evt => {
         evt.preventDefault();
-        // this.props.onSubmit(this.state.imageName);
+        
+        if (this.state.imageName.trim() === '') {
+            alert('Еnter the name of the image!');
+    
+            return
+        };
+
+        this.props.onSubmit(this.state.imageName);
         this.setState({ imageName: '' });
     };
    

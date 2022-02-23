@@ -9,9 +9,13 @@ import Modal from './Modal/Modal';
 export class App extends Component {
   state = {
     showModal: false,
-    image: []
+    image: [],
+    imageName: ''
   };
-
+  
+  handleFormSubmit = imageName => {
+    this.setState({ imageName });
+  };
 
 
   togleModal = () => {
@@ -35,7 +39,7 @@ export class App extends Component {
     const { showModal, image } = this.state
     return (
       <div>
-        <Searchbar />
+        <Searchbar onSubmit={this.handleFormSubmit}/>
         <ImageGallery>
           {image && (<ImageGalleryItem img={image.hits}/>)}
         </ImageGallery>
@@ -43,7 +47,6 @@ export class App extends Component {
         {/* <Loader/>
         <Button/> */}
         {showModal && <Modal><img src="" alt="" /></Modal>}
-        
       </div>
     )
   };
