@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 import s from './Searchbar.module.css';
 
 class Searchbar extends Component {
@@ -15,8 +15,8 @@ class Searchbar extends Component {
         evt.preventDefault();
         
         if (this.state.imageName.trim() === '') {
-            // alert('Еnter the name of the image!');
-            return toast.error('Еnter the name of the image!');
+            alert('Еnter the name of the image!');
+           return
         
            
         };

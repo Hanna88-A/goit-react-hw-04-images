@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+// import { ToastContainer, toast } from 'react-toastify';
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
@@ -48,7 +48,7 @@ export class App extends Component {
         {/* <Loader/> */}
         {/* <Button/> */}
         {showModal && <Modal><img src="" alt="" /></Modal>}
-        <ToastContainer autoClose={3000} position="top-center"/>
+        {/* <ToastContainer autoClose={3000} position="top-center"/> */}
       </div>
     )
   };
