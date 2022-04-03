@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
@@ -9,7 +10,7 @@ import Modal from './Modal/Modal';
 export class App extends Component {
   state = {
     showModal: false,
-    image: [],
+    images: null,
     imageName: ''
   };
   
@@ -31,22 +32,23 @@ export class App extends Component {
 
     fetch('https://pixabay.com/api/?q=cat&page=1&key=24819311-d2b7ac0921a0ad572da5f837a&image_type=photo&orientation=horizontal&per_page=12')
       .then(res => res.json())
-      .then(image => this.setState({ image }));
+      .then(images => this.setState({ images }));
   };
 
   render() {
-    console.log(this.state.image.hits)
-    const { showModal, image } = this.state
+    console.log(this.state.images)
+    const { showModal, images } = this.state
     return (
       <div>
         <Searchbar onSubmit={this.handleFormSubmit}/>
         <ImageGallery>
-          {image && (<ImageGalleryItem img={image.hits}/>)}
+          {images && images.hits.map(image => (<ImageGalleryItem key={image.id} img={image} />)) }
         </ImageGallery>
         
-        {/* <Loader/>
-        <Button/> */}
+        {/* <Loader/> */}
+        {/* <Button/> */}
         {showModal && <Modal><img src="" alt="" /></Modal>}
+        <ToastContainer autoClose={3000} position="top-center"/>
       </div>
     )
   };

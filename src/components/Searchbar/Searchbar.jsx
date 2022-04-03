@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { toast } from 'react-toastify';
 import s from './Searchbar.module.css';
 
 class Searchbar extends Component {
@@ -9,13 +10,15 @@ class Searchbar extends Component {
     handleNameChange = evt => {
         this.setState({ imageName: evt.currentTarget.value.toLowerCase() });
     };
+
     handleSubmit = evt => {
         evt.preventDefault();
         
         if (this.state.imageName.trim() === '') {
-            alert('Еnter the name of the image!');
-    
-            return
+            // alert('Еnter the name of the image!');
+            return toast.error('Еnter the name of the image!');
+        
+           
         };
 
         this.props.onSubmit(this.state.imageName);

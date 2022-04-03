@@ -1,10 +1,9 @@
 import s from './ImageGalleryItem.module.css'
-const ImageGaleryItem = () => {
-    
+const ImageGaleryItem = ({img}) => {
+    console.log(img)
     return (
-        
-        <li key='' className={s.galleryItem}>
-            <img className={s.imageGalleryItem} src='' alt='' />
+        <li className={s.galleryItem}>
+            <img className={s.imageGalleryItem} src={img.webformatURL} alt='' />
         </li>
     )
 }
