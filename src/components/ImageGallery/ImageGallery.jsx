@@ -36,10 +36,8 @@ class ImageGallery extends Component {
                 .fetchImages(nextName, this.props.page)
                 .then(images => {
                     if (images.hits.length === 0) {
-                        // this.setState({ images, status: Status.RESOLVED })
                         return Promise.reject(new Error(Notify.warning("Sorry, there are no images matching your search query. Please try again.")));
                     }
-                    // this.setState({ images, hits: images.hits, status: Status.RESOLVED })
                     this.setState(prevState => ({
                         images: [...prevState.images, ...images.hits],
                         status: Status.RESOLVED,
@@ -76,7 +74,7 @@ class ImageGallery extends Component {
     render() {
         const { images, error, status } = this.state
         const { togleModal, handleImageClick } = this.props
-        console.log(images)
+       
 
         if (status === Status.IDLE) {
             return <div></div>
