@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-// import { toast } from 'react-toastify';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import s from './Searchbar.module.css';
 
 class Searchbar extends Component {
     state = {
         imageName: '',
+        
     };
 
     handleNameChange = evt => {
@@ -15,14 +16,14 @@ class Searchbar extends Component {
         evt.preventDefault();
         
         if (this.state.imageName.trim() === '') {
-            alert('Еnter the name of the image!');
+            Notify.failure('Еnter the name of the image!');
            return
         
            
         };
 
         this.props.onSubmit(this.state.imageName);
-        this.setState({ imageName: '' });
+        this.setState({ imageName: ''});
     };
    
     render() {

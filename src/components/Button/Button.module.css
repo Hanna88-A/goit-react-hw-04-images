@@ -1,0 +1,23 @@
+.loadMore {
+    display: flex;
+    width: 100px;
+    height: 30px;
+    justify-content: center;
+    align-items: center;
+    color: #fafafa;
+
+    background-color: #54aef7;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    border: #2196f3;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.loadMore:hover,
+.loadMore:focus {
+    background-color: #188ce8;
+    cursor: pointer;
+}
