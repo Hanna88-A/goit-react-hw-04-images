@@ -4,8 +4,7 @@ import s from './Searchbar.module.css';
 
 class Searchbar extends Component {
     state = {
-        imageName: '',
-        
+        imageName: '',  
     };
 
     handleNameChange = evt => {
@@ -18,10 +17,7 @@ class Searchbar extends Component {
         if (this.state.imageName.trim() === '') {
             Notify.failure('Еnter the name of the image!');
            return
-        
-           
         };
-
         this.props.onSubmit(this.state.imageName);
         this.setState({ imageName: ''});
     };

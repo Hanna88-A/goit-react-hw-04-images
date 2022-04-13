@@ -19,11 +19,13 @@ class Modal extends Component {
             this.props.onClose()
         }
     }
+
     handleBackdropClick = e => {
         if (e.currentTarget === e.target) {
             this.props.onClose()
         }
     }
+    
     render() {
         const {children} = this.props
         return createPortal(

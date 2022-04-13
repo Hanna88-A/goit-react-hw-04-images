@@ -14,20 +14,16 @@ export class App extends Component {
 
   handleFormSubmit = (imageName) => {
     this.setState({ imageName });
-    
   };
 
- 
    handleImageClick = (bigImage, tags) => {
     this.setState({ bigImage, tags });
   };
-
 
   togleModal = () => {
     this.setState(({ showModal }) => ({
       showModal: !showModal
     }));
-
   };
 
 

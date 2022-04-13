@@ -20,14 +20,11 @@ class ImageGallery extends Component {
         images: [],
         error: null,
         status: Status.IDLE,
-      
     }
    
-
     componentDidUpdate(prevProps, prevState) {
         const prevName = prevProps.imageName;
         const nextName = this.props.imageName;
-        
         
         if (prevName !== nextName) {
             this.setState({ images: [], status: Status.PENDING});
@@ -43,16 +40,13 @@ class ImageGallery extends Component {
                         status: Status.RESOLVED,
                         page: 2
                    }))      
-                     
                 })
                 .catch(error => this.setState({ error, status: Status.REJECTED }))
-            
-    
         };
-
     }
+
     handleButtonClick = () => {
-        this.setState({ images: [], status: Status.PENDING });
+       this.setState({ images: [], status: Status.PENDING });
        imagesApi
                 .fetchImages(this.props.imageName, this.state.page)
                 .then(images => {
@@ -62,20 +56,15 @@ class ImageGallery extends Component {
                         status: Status.RESOLVED,
                         page: prevState.page + 1
                    }))      
-                     
+    
                 })
                 .catch(error => this.setState({ error, status: Status.REJECTED }))
-         
     }
-    
-    
- 
 
     render() {
         const { images, error, status } = this.state
         const { togleModal, handleImageClick } = this.props
        
-
         if (status === Status.IDLE) {
             return <div></div>
         }
