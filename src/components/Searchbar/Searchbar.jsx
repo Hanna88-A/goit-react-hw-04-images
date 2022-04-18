@@ -1,49 +1,49 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import s from './Searchbar.module.css';
 
-class Searchbar extends Component {
-    state = {
-        imageName: '',  
+
+
+export default function Searchbar({onSubmit}) {
+    const [imageName, setImageName] = useState('');
+   
+    
+
+    const handleNameChange = evt => {
+        setImageName(evt.currentTarget.value.toLowerCase());
     };
 
-    handleNameChange = evt => {
-        this.setState({ imageName: evt.currentTarget.value.toLowerCase() });
-    };
-
-    handleSubmit = evt => {
+    const handleSubmit = evt => {
         evt.preventDefault();
         
-        if (this.state.imageName.trim() === '') {
+        if (imageName.trim() === '') {
             Notify.failure('Еnter the name of the image!');
            return
         };
-        this.props.onSubmit(this.state.imageName);
-        this.setState({ imageName: ''});
+        onSubmit(imageName);
+        setImageName('');
+       
+        
+       
     };
    
-    render() {
-        return (
-            <header className={s.searchbar}>
-                <form onSubmit={this.handleSubmit} className={s.searchForm}>
-                    <button type="submit" className={s.searchButton}>
-                        <span className={s.searchButtonLabel}>Search</span>
-                    </button>
-
-                    <input
-                        className={s.searchFormInput}
-                        type="text"
-                        autoComplete="off"
-                        autoFocus
-                        placeholder="Search images and photos"
-                        name='imageName'
-                        value={this.state.imageName}
-                        onChange={this.handleNameChange}
-                    />
-                </form>
-            </header>
-        );
-    };
-};
-
-export default Searchbar;
+    return (
+        <header className={s.searchbar}>
+            <form onSubmit={handleSubmit} className={s.searchForm}>
+                <button type="submit" className={s.searchButton}>
+                    <span className={s.searchButtonLabel}>Search</span>
+                </button>
+                <input
+                    className={s.searchFormInput}
+                    type="text"
+                    autoComplete="off"
+                    autoFocus
+                    placeholder="Search images and photos"
+                    name='imageName'
+                    value={imageName}
+                    onChange={handleNameChange}
+                />
+            </form>
+        </header>
+    )
+}

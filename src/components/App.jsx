@@ -1,43 +1,76 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Modal from './Modal/Modal';
 
-export class App extends Component {
-  state = {
-    showModal: false,
-    imageName: '',
-    bigImage: null,
-    tags: '',
-    page: 1
+
+export function App() {
+  const [showModal, setShowMopdal] = useState(false);
+  const [imageName, setImageName] = useState('');
+  const [bigImage, setBigImage] = useState(null);
+  const [tags, setTages] = useState('');
+  const [pageDefault] = useState(1);
+
+  const handleFormSubmit = (imageName) => {
+    setImageName(imageName)
   };
 
-  handleFormSubmit = (imageName) => {
-    this.setState({ imageName });
+  const handleImageClick = (bigImage, tags) => {
+    setBigImage(bigImage)
+    setTages(tags)
   };
 
-   handleImageClick = (bigImage, tags) => {
-    this.setState({ bigImage, tags });
+  const togleModal = () => {
+    setShowMopdal(prevState => !prevState)
   };
 
-  togleModal = () => {
-    this.setState(({ showModal }) => ({
-      showModal: !showModal
-    }));
-  };
+  return (
+    <div>
+      <Searchbar onSubmit={handleFormSubmit} pageDefault={pageDefault} />
+      <ImageGallery imageName={imageName} togleModal={togleModal} handleImageClick={handleImageClick} />
+
+      {showModal && <Modal onClose={togleModal}><img src={bigImage} alt={tags} width={900}/></Modal>}
+
+    </div>
+  )
+}
 
 
-  render() {
-    const { showModal, imageName, bigImage, tags, page } = this.state
+// export class App extends Component {
+//   state = {
+//     showModal: false,
+//     imageName: '',
+//     bigImage: null,
+//     tags: '',
+//     page: 1
+//   };
 
-    return (
-      <div>
-        <Searchbar onSubmit={this.handleFormSubmit} />
-        <ImageGallery imageName={imageName} togleModal={this.togleModal} handleImageClick={this.handleImageClick} page={page} />
+//   handleFormSubmit = (imageName) => {
+//     this.setState({ imageName });
+//   };
 
-        {showModal && <Modal onClose={this.togleModal}><img src={bigImage} alt={tags} width={900}/></Modal>}
+//    handleImageClick = (bigImage, tags) => {
+//     this.setState({ bigImage, tags });
+//   };
 
-      </div>
-    )
-  }
-};
+//   togleModal = () => {
+//     this.setState(({ showModal }) => ({
+//       showModal: !showModal
+//     }));
+//   };
+
+
+//   render() {
+//     const { showModal, imageName, bigImage, tags, page } = this.state
+
+//     return (
+//       <div>
+//         <Searchbar onSubmit={this.handleFormSubmit} />
+//         <ImageGallery imageName={imageName} togleModal={this.togleModal} handleImageClick={this.handleImageClick} page={page} />
+
+//         {showModal && <Modal onClose={this.togleModal}><img src={bigImage} alt={tags} width={900}/></Modal>}
+
+//       </div>
+//     )
+//   }
+// };

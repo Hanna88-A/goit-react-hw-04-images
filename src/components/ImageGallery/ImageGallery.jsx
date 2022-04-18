@@ -1,5 +1,5 @@
 // import { render } from '@testing-library/react';
-import React, { Component } from 'react';
+import { useState, useEffect } from 'react';
 import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
 import Loader from '../Loader/Loader';
 import s from './ImageGallery.module.css';
@@ -12,80 +12,83 @@ const Status = {
     PENDING: 'pending',
     REJECTED: 'rejected',
     RESOLVED: 'resolved'
-
 };
 
-class ImageGallery extends Component {
-    state = {
-        images: [],
-        error: null,
-        status: Status.IDLE,
-    }
-   
-    componentDidUpdate(prevProps, prevState) {
-        const prevName = prevProps.imageName;
-        const nextName = this.props.imageName;
+export default function ImageGallery({ togleModal, handleImageClick, imageName }) {
+    const [images, setImages] = useState([]);
+    const [error, setError] = useState(null);
+    const [status, setStatus] = useState(Status.IDLE);
+    const [page, setPage] = useState(1)
+    const [startPage] = useState(1)
+    
+
+    useEffect(() => {
         
-        if (prevName !== nextName) {
-            this.setState({ images: [], status: Status.PENDING});
-             
+            if (imageName === '') {
+                return
+            };
+            
+            setStatus(Status.PENDING);
+            setPage(1)
+
             imagesApi
-                .fetchImages(nextName, this.props.page)
+                
+                .fetchImages(imageName, startPage)
                 .then(images => {
                     if (images.hits.length === 0) {
                         return Promise.reject(new Error(Notify.warning("Sorry, there are no images matching your search query. Please try again.")));
                     }
-                    this.setState(prevState => ({
-                        images: [...prevState.images, ...images.hits],
-                        status: Status.RESOLVED,
-                        page: 2
-                   }))      
+                    setImages([...images.hits]);
+                    setPage(prevState => prevState + 1);
+                    setStatus(Status.RESOLVED);
+                
                 })
-                .catch(error => this.setState({ error, status: Status.REJECTED }))
-        };
-    }
+                .catch(error => {
+                    setError(error)
+                    setStatus(Status.REJECTED)
+                });
+            
+    }, [imageName, startPage]);
 
-    handleButtonClick = () => {
-       this.setState({ images: [], status: Status.PENDING });
+      
+    const handleButtonClick = () => {
        imagesApi
-                .fetchImages(this.props.imageName, this.state.page)
-                .then(images => {
-                  
-                    this.setState(prevState => ({
-                        images: [...prevState.images, ...images.hits],
-                        status: Status.RESOLVED,
-                        page: prevState.page + 1
-                   }))      
-    
-                })
-                .catch(error => this.setState({ error, status: Status.REJECTED }))
+            .fetchImages(imageName, page)
+            .then(images => {
+                if (images.hits.length === 0) {
+                    return Promise.reject(new Error(Notify.warning("Sorry, there are no images matching your search query. Please try again.")));
+                }
+                setImages(prevState=> [...prevState,...images.hits]);
+                setStatus(Status.RESOLVED);
+                setPage(prevState=> prevState +1)
+                
+            })
+            .catch(error => {
+                setError(error)
+                setStatus(Status.REJECTED)
+            });
     }
+       
+    if (status === Status.IDLE) {
+        return <div></div>
+    }
+    if (status === Status.PENDING) {
+        return <div className={s.loader}><Loader /></div>
+    }
+    if (status === Status.REJECTED) {
+        return <h1>{error.message}</h1>
+    }
+    if (status === Status.RESOLVED) {
 
-    render() {
-        const { images, error, status } = this.state
-        const { togleModal, handleImageClick } = this.props
-       
-        if (status === Status.IDLE) {
-            return <div></div>
-        }
-        if (status === Status.PENDING) {
-            return  <div className={s.loader}><Loader /></div>   
-        }
-        if (status === Status.REJECTED) {
-            return <h1>{error.message}</h1>
-        }
-        if (status === Status.RESOLVED) {
-            return (
-                <>
-                    <ul className={s.imageGallery}>
-                        {images && images.map(image => (<ImageGalleryItem key={image.id} image={image} togleModal={togleModal} handleImageClick={handleImageClick}/>)) }
-                    </ul>
-                    {images && <Button handleButtonClick={this.handleButtonClick }/>}
-                </>
-            )
-        }  
-       
-    }
-    
+        return (
+            <>
+                <ul className={s.imageGallery}>
+                    {images && images.map(image => (<ImageGalleryItem key={image.id} image={image} togleModal={togleModal} handleImageClick={handleImageClick} />))}
+                </ul>
+                {images && <Button handleButtonClick={handleButtonClick} />}
+            </>
+            
+        )
+    };
 };
-export default ImageGallery;
+
