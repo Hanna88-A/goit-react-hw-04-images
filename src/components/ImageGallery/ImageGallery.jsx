@@ -6,6 +6,7 @@ import s from './ImageGallery.module.css';
 import imagesApi from '../../services/images-api';
 import Button from '../Button/Button';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import PropTypes from "prop-types"; 
 
 const Status = {
     IDLE: 'idle',
@@ -92,3 +93,8 @@ export default function ImageGallery({ togleModal, handleImageClick, imageName }
     };
 };
 
+ImageGallery.propTypes = {
+    togleModal: PropTypes.func,
+    handleImageClick: PropTypes.func,
+    imageName: PropTypes.string
+};

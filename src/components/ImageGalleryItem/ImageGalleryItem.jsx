@@ -1,5 +1,5 @@
-
 import s from './ImageGalleryItem.module.css';
+import PropTypes from "prop-types"; 
 
 const ImageGaleryItem = ({ image:{webformatURL, tags, largeImageURL}, togleModal, handleImageClick}) => {
 
@@ -10,7 +10,6 @@ const ImageGaleryItem = ({ image:{webformatURL, tags, largeImageURL}, togleModal
                 onClick={() => {
                     togleModal()
                     handleImageClick(largeImageURL, tags)
-
                 }}
                 
                 src={webformatURL}
@@ -20,3 +19,9 @@ const ImageGaleryItem = ({ image:{webformatURL, tags, largeImageURL}, togleModal
 
 }
 export default ImageGaleryItem;
+
+ImageGaleryItem.propTypes = {
+    image: PropTypes.object,
+    togleModal: PropTypes.func,
+    handleImageClick: PropTypes.func
+};

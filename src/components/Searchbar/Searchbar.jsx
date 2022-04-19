@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import s from './Searchbar.module.css';
+import PropTypes from "prop-types"; 
 
 
 
@@ -47,3 +48,9 @@ export default function Searchbar({onSubmit}) {
         </header>
     )
 }
+
+Searchbar.propTypes = {
+    onSubmit: PropTypes.func
+   
+};
+
